@@ -21,19 +21,37 @@
     <script type="text/babel">
 
         // Array di nomi di animali da mostrare nella lista
-        const animals = ["Cane", "Gatto", "Pappagallo", "Coniglio", "Criceto"];
+        const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
 
         // Componente React che crea un <details> con lista <ul>
         function ListaAnimali() {
+
+            // Stato della lista degli animali (inizialmente vuota)
+            const [animals, setAnimals] = React.useState([]);
+
+            // Funzione per aggiungere un animale casuale alla lista
+            const aggiungiAnimale = () => {
+                const animaleCasuale = animalsChoices[Math.floor(Math.random() * animalsChoices.length)];
+                setAnimals(prev => [...prev, animaleCasuale]);
+            };
+
             return (
-                <details open>
-                    <summary>Animali</summary>
-                    <ul>
-                        {animals.map((animale, index) => (
-                            <li key={index}>{animale}</li>
-                        ))}
-                    </ul>
-                </details>
+
+                <>
+                    {/* Bottone per aggiungere un animale */}
+                    <button onClick={aggiungiAnimale}>Aggiungi Animale</button>
+
+                    {/* Dettagli espandibile con la lista */}
+                    <details open>
+                        <summary>Animali</summary>
+                        <ul>
+                            {animals.map((animale, index) => (
+                                <li key={index}>{animale}</li>
+                            ))}
+                        </ul>
+                    </details>
+                </>
+
             );
         }
 
