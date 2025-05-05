@@ -20,6 +20,30 @@
     <!-- Script React in JSX compilato da Babel -->
     <script type="text/babel">
 
+        // Componente Modal
+        function Modal({
+            title,
+            content,
+            show = false,
+            onClose = () => { },
+            onConfirm = () => { }
+        }) {
+            return show && ReactDOM.createPortal(
+                <div className="modal-container">
+                    <div className="modal">
+                        <h2>{title}</h2>
+                        {/* Mostra il contenuto passato come prop */}
+                        <div>{content}</div>
+                        <div>
+                            <button onClick={onClose}>Annulla</button>
+                            <button onClick={onConfirm}>Conferma</button>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            );
+        }
+
         // Array di nomi di animali da mostrare nella lista
         const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
 
@@ -29,17 +53,42 @@
             // Stato della lista degli animali (inizialmente vuota)
             const [animals, setAnimals] = React.useState([]);
 
+            // Stato per gestire la visibilità della modale
+            const [showModal, setShowModal] = React.useState(false);
+
+            // Stato per il nuovo animale da aggiungere
+            const [newAnimal, setNewAnimal] = React.useState("");
+
             // Funzione per aggiungere un animale casuale alla lista
+            // const aggiungiAnimale = () => {
+            //     const animaleCasuale = animalsChoices[Math.floor(Math.random() * animalsChoices.length)];
+            //     setAnimals(prev => [...prev, animaleCasuale]);
+            // };
+
+            // Funzione per aggiungere un animale alla lista
             const aggiungiAnimale = () => {
-                const animaleCasuale = animalsChoices[Math.floor(Math.random() * animalsChoices.length)];
-                setAnimals(prev => [...prev, animaleCasuale]);
+                if (newAnimal.trim()) {
+                    setAnimals(prev => [...prev, newAnimal]);
+                    setNewAnimal("");  // Resetta l'input
+                    setShowModal(false);  // Chiude la modale
+                }
+            };
+
+            // Funzione per aprire la modale
+            const openModal = () => {
+                setShowModal(true);
+            };
+
+            // Funzione per chiudere la modale senza fare modifiche
+            const closeModal = () => {
+                setNewAnimal("");  // Resetta l'input
+                setShowModal(false);  // Chiude la modale
             };
 
             return (
-
                 <>
-                    {/* Bottone per aggiungere un animale */}
-                    <button onClick={aggiungiAnimale}>Aggiungi Animale</button>
+                    {/* Bottone per aprire la modale */}
+                    <button onClick={openModal}>Aggiungi Animale</button>
 
                     {/* Dettagli espandibile con la lista */}
                     <details open>
@@ -50,9 +99,45 @@
                             ))}
                         </ul>
                     </details>
-                </>
 
+                    {/* Modale per aggiungere un animale */}
+                    <Modal
+                        title="Aggiungi Animale"
+                        show={showModal}
+                        onClose={closeModal}
+                        onConfirm={aggiungiAnimale}
+                        content={
+                            <div>
+                                <input
+                                    type="text"
+                                    value={newAnimal}
+                                    onChange={(e) => setNewAnimal(e.target.value)}
+                                    placeholder="Inserisci il nome dell'animale"
+                                />
+                            </div>
+                        }
+                    />
+                </>
             );
+
+            // return (
+
+            //     <>
+            //         {/* Bottone per aggiungere un animale */}
+            //         <button onClick={aggiungiAnimale}>Aggiungi Animale</button>
+
+            //         {/* Dettagli espandibile con la lista */}
+            //         <details open>
+            //             <summary>Animali</summary>
+            //             <ul>
+            //                 {animals.map((animale, index) => (
+            //                     <li key={index}>{animale}</li>
+            //                 ))}
+            //             </ul>
+            //         </details>
+            //     </>
+
+            // );
         }
 
         // Aspetta che il DOM sia pronto prima di montare React
