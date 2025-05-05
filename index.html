@@ -59,12 +59,6 @@
             // Stato per il nuovo animale da aggiungere
             const [newAnimal, setNewAnimal] = React.useState("");
 
-            // Funzione per aggiungere un animale casuale alla lista
-            // const aggiungiAnimale = () => {
-            //     const animaleCasuale = animalsChoices[Math.floor(Math.random() * animalsChoices.length)];
-            //     setAnimals(prev => [...prev, animaleCasuale]);
-            // };
-
             // Funzione per aggiungere un animale alla lista
             const aggiungiAnimale = () => {
                 if (newAnimal.trim()) {
@@ -120,24 +114,6 @@
                 </>
             );
 
-            // return (
-
-            //     <>
-            //         {/* Bottone per aggiungere un animale */}
-            //         <button onClick={aggiungiAnimale}>Aggiungi Animale</button>
-
-            //         {/* Dettagli espandibile con la lista */}
-            //         <details open>
-            //             <summary>Animali</summary>
-            //             <ul>
-            //                 {animals.map((animale, index) => (
-            //                     <li key={index}>{animale}</li>
-            //                 ))}
-            //             </ul>
-            //         </details>
-            //     </>
-
-            // );
         }
 
         // Aspetta che il DOM sia pronto prima di montare React
