@@ -1,0 +1,67 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I miei animali Preferiti</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Import di React e ReactDOM da CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Import di Babel per permettere l'uso di JSX nel browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Script React in JSX compilato da Babel -->
+    <script type="text/babel">
+
+        // Array di nomi di animali da mostrare nella lista
+        const animals = ["Cane", "Gatto", "Pappagallo", "Coniglio", "Criceto"];
+
+        // Componente React che crea un <details> con lista <ul>
+        function ListaAnimali() {
+            return (
+                <details open>
+                    <summary>Animali</summary>
+                    <ul>
+                        {animals.map((animale, index) => (
+                            <li key={index}>{animale}</li>
+                        ))}
+                    </ul>
+                </details>
+            );
+        }
+
+        // Aspetta che il DOM sia pronto prima di montare React
+        const root = ReactDOM.createRoot(document.querySelector('.lista-animali'));
+        root.render(<ListaAnimali />);
+
+    </script>
+
+</head>
+
+<body>
+
+    <header>
+        <h1>I miei animali Preferiti</h1>
+    </header>
+
+    <main>
+        <figure>
+            <img src="https://picsum.photos/400/300" alt="Immagine Casuale">
+        </figure>
+        <div class="lista-animali"></div>
+    </main>
+
+    <footer>
+        <p>Creato con amore da... un collega sbadato! 🐾</p>
+    </footer>
+
+</body>
+
+</html>
